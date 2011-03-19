@@ -19,9 +19,5 @@ public class WebService : System.Web.Services.WebService {
         //InitializeComponent(); 
     }
 
-    [WebMethod]
-    public string HelloWorld() {
-        return "Hello World";
-    }
-    
+   
 }
