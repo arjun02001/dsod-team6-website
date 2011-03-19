@@ -13,7 +13,7 @@ public class WebService  : System.Web.Services.WebService {
 
     [WebMethod]
     public string HelloWorld() {
-      
+        string name = "ramya";
         return "Hello World";
     }
     
