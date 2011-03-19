@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Services;
 
 /// <summary>
+using System.Web.Services;
 /// Summary description for WebService
 /// </summary>
 [WebService(Namespace = "http://tempuri.org/")]
