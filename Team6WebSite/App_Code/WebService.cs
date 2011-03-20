@@ -501,6 +501,21 @@ public class WebService : System.Web.Services.WebService
             return "Error getting information";
         }
     }
+
+    [WebMethod]
+    public string ReverseString(string message)
+    {
+        try
+        {
+            char[] array = message.ToCharArray();
+            Array.Reverse(array);
+            return new string(array);
+        }
+        catch (Exception)
+        {
+            return string.Empty;
+        }
+    }
 }
 
 
