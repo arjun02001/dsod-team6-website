@@ -72,41 +72,45 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    //[WebMethod]
-    //public string GetAddressFromCoord(string address)
-    //{
-    //string results = "";
-    //string key = "AjdBmWL-51nlsoocyGsHAnE3eNOADU1CPWmJ-9kmPL1s7X13jurTlrRx1A49WzwD";
-    //ReverseGeocodeRequest reverseGeocodeRequest = new ReverseGeocodeRequest();
+    [WebMethod]
+    public string GetAddressFromCoord(string locationString)
+    {
+        try
+        {
+            string results = "";
+            string key = "AjdBmWL-51nlsoocyGsHAnE3eNOADU1CPWmJ-9kmPL1s7X13jurTlrRx1A49WzwD";
+            GeocodeService.ReverseGeocodeRequest reverseGeocodeRequest = new GeocodeService.ReverseGeocodeRequest();
 
-    //// Set the credentials using a valid Bing Maps key
-    //reverseGeocodeRequest.Credentials = new GeocodeService1.Credentials();
-    //reverseGeocodeRequest.Credentials.ApplicationId = key;
+            // Set the credentials using a valid Bing Maps key
+            reverseGeocodeRequest.Credentials = new GeocodeService.Credentials();
+            reverseGeocodeRequest.Credentials.ApplicationId = key;
 
-    //// Set the point to use to find a matching address
-    //GeocodeService1.Location point = new GeocodeService1.Location();
-    //string[] digits = locationString.Split(',');
+            // Set the point to use to find a matching address
+            GeocodeService.Location point = new GeocodeService.Location();
+            string[] digits = locationString.Split(',');
 
-    //point.Latitude = double.Parse(digits[0].Trim());
-    //point.Longitude = double.Parse(digits[1].Trim());
+            point.Latitude = double.Parse(digits[0].Trim());
+            point.Longitude = double.Parse(digits[1].Trim());
 
-    //reverseGeocodeRequest.Location = point;
+            reverseGeocodeRequest.Location = point;
 
-    //// Make the reverse geocode request
-    //GeocodeServiceClient geocodeService = new GeocodeServiceClient("BasicHttpBinding_IGeocodeService");
-    //GeocodeResponse geocodeResponse = geocodeService.ReverseGeocode(reverseGeocodeRequest);
+            // Make the reverse geocode request
+            GeocodeService.GeocodeServiceClient geocodeService = new GeocodeService.GeocodeServiceClient("BasicHttpBinding_IGeocodeService");
+            GeocodeService.GeocodeResponse geocodeResponse = geocodeService.ReverseGeocode(reverseGeocodeRequest);
 
-    //if (geocodeResponse.Results.Length > 0)
-    //    results = geocodeResponse.Results[0].DisplayName;
-    //else
-    //    results = "No Results found";
+            if (geocodeResponse.Results.Length > 0)
+                results = geocodeResponse.Results[0].DisplayName;
+            else
+                results = "No Results found";
 
-    //return results;
+            return results;
+        }
+        catch (Exception ex)
+        {
+            return "Address not found";
+        }
 
-
-
-
-    //}
+     }
 
     [WebMethod]
     public string EncryptString(string message, string passphrase)
