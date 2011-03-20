@@ -23,13 +23,15 @@ public class WebService : System.Web.Services.WebService {
     [WebMethod]
     public string GetCoordFromAddress(string address)
     {
-        string coord = string.Empty;
         try
         {
+            GeocodeUtil.CoordinateInfo Coord = new GeocodeUtil.CoordinateInfo();
+            Coord = GeocodeUtil.GeocodeAddress(address, "AjdBmWL-51nlsoocyGsHAnE3eNOADU1CPWmJ-9kmPL1s7X13jurTlrRx1A49WzwD");
+            return Coord.Y + " , " + Coord.X;
         }
         catch (Exception)
         {
+            return string.Empty;
         }
-        return coord;
     }
 }
