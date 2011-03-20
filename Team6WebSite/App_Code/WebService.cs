@@ -5,6 +5,7 @@ using System.Web;
 using GeocodeService;
 using BingGeocode;
 using System.Security.Cryptography;
+using System.Text;
 
 /// <summary>
 using System.Web.Services;
@@ -143,7 +144,22 @@ public class WebService : System.Web.Services.WebService
             return "Error in encrypting string";
         }
     }
+    [WebMethod]
+    public String AsciiConversion(String Enter_a_String)
+    {
+        string c = " ";
+        string a;
+        byte[] ASCIIValues = Encoding.ASCII.GetBytes(Enter_a_String);
+        foreach (byte b in ASCIIValues)
+        {
+            a = Convert.ToString(b);
+            //Console.WriteLine(b);
+            c = String.Concat(c, " ", a);
+        }
+        return "The ascii value of string is " + c;
+    }
 }
+
 
 public class CoordinateInfo
 {
