@@ -9,7 +9,8 @@ using ImageryService;
 using System.Text;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
-//using RoutingService;
+using ZipService;
+using System.Xml;
 
 /// <summary>
 using System.Web.Services;
@@ -481,6 +482,23 @@ public class WebService : System.Web.Services.WebService
             { 
                 return "Unknown Card Number"; 
             }
+        }
+    }
+
+    [WebMethod]
+    public string GetInfoByZip(string zip)
+    {
+        try
+        {
+            USZip uszip = new USZip();
+            XmlNode node = uszip.GetInfoByZIP(zip);
+            string city = node.SelectSingleNode("//CITY").LastChild.Value;
+            string state = node.SelectSingleNode("//STATE").LastChild.Value;
+            return city + ", " + state;
+        }
+        catch (Exception)
+        {
+            return "Error getting information";
         }
     }
 }
