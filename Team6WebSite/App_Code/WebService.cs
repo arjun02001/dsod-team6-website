@@ -363,12 +363,57 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
+
+    [WebMethod]
+    public string GenerateRandomPassword(int size)
+    {
+        try
+        {
+
+            string[] Characters = new string[62];
+            char toInsert = 'a';
+            int i=0,j=0,num=0;
+            for ( i = 0; i < 26; i++)
+            {
+                Characters[i] = toInsert.ToString();
+                toInsert++;
+            }
+            toInsert = 'A';
+            for (j = i; j < i+26; j++)
+            {
+                Characters[j] = toInsert.ToString();
+                toInsert++;
+            }
+            i=j;
+            for (j = i; j < i + 10; j++)
+            {
+                Characters[j] = num.ToString();
+                num++;
+            }
+            
+            Random RandChar = new Random();
+            string Password = "";
+
+            for (int z = 0; z < size; z++)
+            {
+                Password += Characters[RandChar.Next(0, 62)];
+            }
+
+            return Password;
+        }
+        catch (Exception ex)
+        {
+            return string.Empty;
+        }
+    }
+
+
     [WebMethod]
     public string GetCurrentTime()
     {
         return String.Format("The current time is {0}.", DateTime.Now.ToString());
-
     }
+
 }
 
 
