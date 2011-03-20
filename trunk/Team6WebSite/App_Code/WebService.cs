@@ -185,7 +185,6 @@ public class WebService : System.Web.Services.WebService
     {
         try
         {
-
             string c = string.Empty;
             string a;
             byte[] ASCIIValues = Encoding.ASCII.GetBytes(stringtoconvert);
@@ -195,16 +194,11 @@ public class WebService : System.Web.Services.WebService
                 c = String.Concat(c, " ", a);
             }
             return "The ascii value of string is " + c;
-
-          
-
         }
-
         catch (Exception)
         {
             return "Operation Failed";
         }
-
     }
 
     [WebMethod]
@@ -255,25 +249,17 @@ public class WebService : System.Web.Services.WebService
         try
         {
             bool stripTags = false;
-            // Declare and initialize the variable holding the number of counted words
             int countedWords = 0;
-
-            // If the stripTags argument was passed as false
             if (stripTags == false)
             {
-                // Simply count the words in the string by splitting them wherever a space is found
                 countedWords = sentence.Split(' ').Length;
             }
             else
             {
-                // If the user wants to strip tags, first define the tag form
                 Regex tagMatch = new Regex("<[^>]+>");
-                // Replace the tags with an empty string so they are not considered in count
                 sentence = tagMatch.Replace(sentence, "");
-                // Count the words in the string by splitting them wherever a space is found
                 countedWords = sentence.Split(' ').Length;
             }
-            // Return the number of words that were counted
             return countedWords;
         }
         catch (Exception ex)
@@ -281,8 +267,6 @@ public class WebService : System.Web.Services.WebService
             return 0;
         }
     }
-
-    
 }
 
 
