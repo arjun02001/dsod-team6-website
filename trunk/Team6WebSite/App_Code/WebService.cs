@@ -362,6 +362,13 @@ public class WebService : System.Web.Services.WebService
             return "No Routes Found";
         }
     }
+
+    [WebMethod]
+    public string GetCurrentTime()
+    {
+        return String.Format("The current time is {0}.", DateTime.Now.ToString());
+
+    }
 }
 
 
