@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using GeocodeService;
 
 /// <summary>
 using System.Web.Services;
@@ -19,5 +20,16 @@ public class WebService : System.Web.Services.WebService {
         //InitializeComponent(); 
     }
 
-   
+    [WebMethod]
+    public string GetCoordFromAddress(string address)
+    {
+        string coord = string.Empty;
+        try
+        {
+        }
+        catch (Exception)
+        {
+        }
+        return coord;
+    }
 }
