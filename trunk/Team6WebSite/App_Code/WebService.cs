@@ -68,12 +68,12 @@ public class WebService : System.Web.Services.WebService
         }
         catch (Exception)
         {
-            return string.Empty;
+            return "Address could not be resolved";
         }
     }
 
     [WebMethod]
-    public string GetAddressFromCoord(string locationString)
+    public string GetAddressFromCoord(string commaseparatedcoords)
     {
         try
         {
@@ -87,7 +87,7 @@ public class WebService : System.Web.Services.WebService
 
             // Set the point to use to find a matching address
             GeocodeService.Location point = new GeocodeService.Location();
-            string[] digits = locationString.Split(',');
+            string[] digits = commaseparatedcoords.Split(',');
 
             point.Latitude = double.Parse(digits[0].Trim());
             point.Longitude = double.Parse(digits[1].Trim());
@@ -140,7 +140,7 @@ public class WebService : System.Web.Services.WebService
         }
         catch (Exception)
         {
-            return string.Empty;
+            return "Error in encrypting string";
         }
     }
 }
