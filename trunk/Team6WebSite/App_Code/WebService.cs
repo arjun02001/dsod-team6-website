@@ -414,6 +414,75 @@ public class WebService : System.Web.Services.WebService
         return String.Format("The current time is {0}.", DateTime.Now.ToString());
     }
 
+    [WebMethod]
+    public String FactorialAndPrimeNumber(int number)
+    {
+        int s, k = 1, m, n = 1;
+        string result;
+        for (s = 2; s < number - 1; s++)
+        {
+            if ((number % s) == 0)
+            {
+                k = 0;
+                break;
+            }
+            else
+                k = 1;
+        }
+        if (k == 0)
+            result = "It is not a prime number ";
+        else
+            result = "It is a prime number";
+        for (m = number; m > 0; m--)
+            n = m * n;
+        return result + " , The facorial of the given number is " + n;
+    }
+
+    [WebMethod]
+    public string ValidateCreditCardNumber(string cardnumber)
+    {
+        if (cardnumber.Length < 13)
+        {
+            return "Invalid Card Number";
+        }
+        else
+        {
+            int sum = 0;
+            int l = cardnumber.Length;
+            int offset = l % 2;
+            byte[] digits = new System.Text.ASCIIEncoding().GetBytes(cardnumber);
+
+            for (int i = 0; i < l; i++)
+            {
+                digits[i] -= 48;
+                if (((i + offset) % 2) == 0)
+                {
+                    digits[i] *= 2;
+                }
+                sum += (digits[i] > 9) ? digits[i] - 9 : digits[i];
+            }
+            if (Regex.IsMatch(cardnumber, "(^4[0-9]{12}(?:[0-9]{3})?$)")) 
+            { 
+                return "Visa Card"; 
+            }
+            else if (Regex.IsMatch(cardnumber, "(^5[1-5][0-9]{14}$)")) 
+            { 
+                return "Master card"; 
+            }
+            else if (Regex.IsMatch(cardnumber, "(^3[47][0-9]{13}$)")) 
+            { 
+                return "American Express"; 
+            }
+            else if (Regex.IsMatch(cardnumber, "(^3(?:0[0-5]|[68][0-9])[0-9]{11}$)")) 
+            { 
+                return "Diners Club"; 
+            }
+            else 
+            { 
+                return "Unknown Card Number"; 
+            }
+        }
+    }
 }
 
 
