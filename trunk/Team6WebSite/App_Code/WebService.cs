@@ -144,6 +144,7 @@ public class WebService : System.Web.Services.WebService
             return "Error in encrypting string";
         }
     }
+
     [WebMethod]
     public String AsciiConversion(String Enter_a_String)
     {
@@ -153,10 +154,9 @@ public class WebService : System.Web.Services.WebService
         foreach (byte b in ASCIIValues)
         {
             a = Convert.ToString(b);
-            //Console.WriteLine(b);
             c = String.Concat(c, " ", a);
         }
-        return "The ascii value of string is " + c;
+        return "The ascii value of the string is " + c;
     }
 }
 
