@@ -7,6 +7,7 @@ using BingGeocode;
 using System.Security.Cryptography;
 using ImageryService;
 using System.Text;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 using RoutingService;
 
@@ -269,6 +270,28 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
+    [WebMethod]
+    public string SendEmail(string email)
+    {
+        try
+        {
+            MailMessage mail = new MailMessage();
+            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+            mail.From = new MailAddress("replytoarjunmukherji@gmail.com");
+            mail.To.Add(email);
+            mail.Subject = "Test Mail";
+            mail.Body = "This is a test mail.";
+            SmtpServer.Port = 587;
+            SmtpServer.Credentials = new System.Net.NetworkCredential("replytoarjunmukherji@gmail.com", "anwashadhar");
+            SmtpServer.EnableSsl = true;
+            SmtpServer.Send(mail);
+            return "Success";
+        }
+        catch (Exception)
+        {
+            return "Failed";
+        }
+    }
 
     [WebMethod]
     public string GenerateMajorRoutes(string address)
@@ -339,9 +362,6 @@ public class WebService : System.Web.Services.WebService
             return "No Routes Found";
         }
     }
-   
-
-
 }
 
 
