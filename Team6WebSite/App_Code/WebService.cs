@@ -5,6 +5,7 @@ using System.Web;
 using GeocodeService;
 using BingGeocode;
 using System.Security.Cryptography;
+using ImageryService;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -107,7 +108,7 @@ public class WebService : System.Web.Services.WebService
 
             return results;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return "Address not found";
         }
@@ -147,6 +148,39 @@ public class WebService : System.Web.Services.WebService
     }
 
     [WebMethod]
+    public string DecryptString(string encryptedmessage, string passphrase)
+    {
+        try
+        {
+            byte[] results;
+            System.Text.UTF8Encoding utf8 = new System.Text.UTF8Encoding();
+            MD5CryptoServiceProvider hashprovider = new MD5CryptoServiceProvider();
+            byte[] tdeskey = hashprovider.ComputeHash(utf8.GetBytes(passphrase));
+            TripleDESCryptoServiceProvider tdesalgorithm = new TripleDESCryptoServiceProvider();
+            tdesalgorithm.Key = tdeskey;
+            tdesalgorithm.Mode = CipherMode.ECB;
+            tdesalgorithm.Padding = PaddingMode.PKCS7;
+            byte[] datatodecrypt = Convert.FromBase64String(encryptedmessage);
+            try
+            {
+                ICryptoTransform decryptor = tdesalgorithm.CreateDecryptor();
+                results = decryptor.TransformFinalBlock(datatodecrypt, 0, datatodecrypt.Length);
+            }
+            finally
+            {
+                tdesalgorithm.Clear();
+                hashprovider.Clear();
+            }
+            return utf8.GetString(results);
+        }
+        catch (Exception)
+        {
+            return "Error in decrypting string";
+        }
+        
+    }
+
+    [WebMethod]
     public String AsciiConversion(String stringtoconvert)
     {
         try
@@ -172,6 +206,49 @@ public class WebService : System.Web.Services.WebService
         }
 
     }
+
+    [WebMethod]
+    public string GetImageFromAddress(string address)
+    {
+        try
+        {
+            string locationString = GetCoordFromAddress(address);
+            string key = "AjdBmWL-51nlsoocyGsHAnE3eNOADU1CPWmJ-9kmPL1s7X13jurTlrRx1A49WzwD";
+            MapUriRequest mapUriRequest = new MapUriRequest();
+
+            // Set credentials using a valid Bing Maps key
+            mapUriRequest.Credentials = new ImageryService.Credentials();
+            mapUriRequest.Credentials.ApplicationId = key;
+
+            // Set the location of the requested image
+            mapUriRequest.Center = new ImageryService.Location();
+            string[] digits = locationString.Split(',');
+            mapUriRequest.Center.Latitude = double.Parse(digits[0].Trim());
+            mapUriRequest.Center.Longitude = double.Parse(digits[1].Trim());
+
+            // Set the map style and zoom level
+            MapUriOptions mapUriOptions = new MapUriOptions();
+            mapUriOptions.Style = MapStyle.AerialWithLabels;
+            mapUriOptions.ZoomLevel = 17;
+
+            // Set the size of the requested image in pixels
+            mapUriOptions.ImageSize = new ImageryService.SizeOfint();
+            mapUriOptions.ImageSize.Height = 480;
+            mapUriOptions.ImageSize.Width = 640;
+
+            mapUriRequest.Options = mapUriOptions;
+
+            //Make the request and return the URI
+            ImageryServiceClient imageryService = new ImageryServiceClient("BasicHttpBinding_IImageryService");
+            MapUriResponse mapUriResponse = imageryService.GetMapUri(mapUriRequest);
+            return mapUriResponse.Uri;
+        }
+        catch (Exception)
+        {
+            return "Error in processing address";
+        }
+    }
+
     [WebMethod]
     public int WordCount(string sentence)
     {
