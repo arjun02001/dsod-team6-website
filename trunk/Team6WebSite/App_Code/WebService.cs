@@ -547,7 +547,7 @@ public class WebService : System.Web.Services.WebService
         }
         catch
         {
-            return string.Empty;
+            return "Input Error";
         }
     }
 
@@ -574,7 +574,7 @@ public class WebService : System.Web.Services.WebService
         }
         catch
         {
-            return string.Empty;
+            return "Input Error";
         }
     }
 
@@ -601,9 +601,35 @@ public class WebService : System.Web.Services.WebService
         }
         catch
         {
-            return String.Empty;
+            return "Input Error";
         }
     }
+
+    // Yet to test it
+    //[WebMethod]
+    //public int NPrimes(int n)
+    //{
+      //  int i=1,c;    
+        //try
+        //{
+          //  while (i <= n)
+            //{
+              //  c = 0;
+                //for (int j = 1; j <= i; j++)
+                //{
+                  //  if (i % j == 0)
+                    //    c++;
+                //}
+                //if (c == 2)
+                  //  return i;
+                //i++;
+            //}
+        //}
+        //catch
+        //{
+          //  return 0;
+        //}
+    //}
 
 }
 
