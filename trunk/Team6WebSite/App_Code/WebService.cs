@@ -576,7 +576,34 @@ public class WebService : System.Web.Services.WebService
         {
             return string.Empty;
         }
-    }        
+    }
+
+    /// <summary>
+    /// Validate US Phone with Regular Expression
+    /// </summary>
+    /// <param name="phone"></param>
+    /// <returns></returns>
+    [WebMethod]
+    public string ValidatePhone(string phone)
+    {
+        string phone_regex = @"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$";
+        try
+        {
+            if (!String.IsNullOrEmpty(phone))
+            {
+                if (Regex.IsMatch(phone, phone_regex))
+                    return "Valid US Phone Number";
+                else
+                    return "Invalid US Phone Number";
+            }
+            else
+                return String.Empty;
+        }
+        catch
+        {
+            return String.Empty;
+        }
+    }
 
 }
 
