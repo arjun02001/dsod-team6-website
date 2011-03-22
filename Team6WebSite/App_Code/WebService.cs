@@ -516,6 +516,68 @@ public class WebService : System.Web.Services.WebService
             return string.Empty;
         }
     }
+
+    /// <summary>
+    /// Validate Email Id with a Regular Expression
+    /// </summary>
+    /// <param name="emailid"></param>
+    /// <returns>True/False</returns>
+    [WebMethod]
+    public string ValidateEmail(string emailid)
+    {
+        string email_regex = 
+			@"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@"
+     + @"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?
+				[0-9]{1,2}|25[0-5]|2[0-4][0-9])\."
+     + @"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?
+				[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+     + @"([a-zA-Z]+[\w-]+\.)+[a-zA-Z]{2,4})$";
+
+        try
+        {
+            if (!String.IsNullOrEmpty(emailid))
+            {
+                if (Regex.IsMatch(emailid, email_regex))
+                    return "Valid Email Id";
+                else
+                    return "Invalid Email Id";
+            }
+            else
+                return string.Empty;
+        }
+        catch
+        {
+            return string.Empty;
+        }
+    }
+
+    /// <summary>
+    /// Validate Zip code with Regular Expression
+    /// </summary>
+    /// <param name="zip"></param>
+    /// <returns></returns>
+    [WebMethod]
+    public string ValidateZip(string zip)
+    {
+        string zip_regex = "(^[0-9]{5}$)|(^[0-9]{5}-[0-9]{4}$)";
+        try
+        {
+            if (!String.IsNullOrEmpty(zip))
+            {
+                if (Regex.IsMatch(zip, zip_regex))
+                    return "Valid US Zip Code";
+                else
+                    return "Invalid US Zip Code";
+            }
+            else
+                return string.Empty;
+        }
+        catch
+        {
+            return string.Empty;
+        }
+    }        
+
 }
 
 
