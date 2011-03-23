@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ using System.Net.Mail;
 using System.Text.RegularExpressions;
 using ZipService;
 using System.Xml;
+
 
 /// <summary>
 using System.Web.Services;
@@ -607,29 +609,22 @@ public class WebService : System.Web.Services.WebService
 
     // Yet to test it
     //[WebMethod]
-    //public int NPrimes(int n)
+   // public ArrayList GenerateNPrimes(int n)
     //{
-      //  int i=1,c;    
-        //try
-        //{
-          //  while (i <= n)
-            //{
-              //  c = 0;
-                //for (int j = 1; j <= i; j++)
-                //{
-                  //  if (i % j == 0)
-                    //    c++;
-                //}
-                //if (c == 2)
-                  //  return i;
-                //i++;
-            //}
-        //}
-        //catch
-        //{
-          //  return 0;
-        //}
-    //}
+     //   ArrayList primes = new ArrayList();
+     //   bool isPrime = true;
+
+      //  if(n < 2) return null; 
+      //  if (n>2 && (n%2)==0) return null;
+      //  for (int i = 2; i < n; i++)
+      //  {
+      //      primes.Add(i);
+      //      if ((n % i) == 0)
+      //          return null;
+       // }
+        
+      //  return primes;
+   // }
 
 }
 
