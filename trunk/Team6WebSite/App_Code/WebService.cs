@@ -609,22 +609,39 @@ public class WebService : System.Web.Services.WebService
 
     // Yet to test it
     //[WebMethod]
-   // public ArrayList GenerateNPrimes(int n)
-    //{
-     //   ArrayList primes = new ArrayList();
-     //   bool isPrime = true;
-
-      //  if(n < 2) return null; 
-      //  if (n>2 && (n%2)==0) return null;
-      //  for (int i = 2; i < n; i++)
-      //  {
-      //      primes.Add(i);
-      //      if ((n % i) == 0)
-      //          return null;
-       // }
-        
-      //  return primes;
-   // }
+   // public ArrayList GenerateNPrimes(double n)
+   // {
+    //    ArrayList primes = new ArrayList();
+    //    bool isPrime = true;
+     //   
+      //  if (n>0) primes.Add(2);
+    //
+      //  for (int i=1; i<= Convert.ToInt32(System.Math.Sqrt(n)); 
+       // 
+       // 
+       // 
+       // 
+       // 
+        //if(n < 2) isPrime = false;
+    //
+        //if(n>=2) 
+        //primes.Add(2);
+        //
+        //if (n > 2 && n != 2 && (n % 2) == 0) isPrime = false;
+        //
+        //for (int i = 2; i < n; i++)
+        //{
+            //primes.Add(i);
+          //  if ((n % i) == 0)
+            //    isPrime=false;
+            //else
+            //    primes.Add(i);
+        //}
+      //  if (isPrime)
+         //   return primes;
+      //  else 
+       //     return null;
+    //}
 
 }
 
