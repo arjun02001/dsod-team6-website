@@ -599,7 +599,7 @@ public class WebService : System.Web.Services.WebService
                     return "Invalid US Phone Number";
             }
             else
-                return String.Empty;
+                return "Input Error";
         }
         catch
         {
