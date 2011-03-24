@@ -612,29 +612,39 @@ public class WebService : System.Web.Services.WebService
     public ArrayList GenerateNPrimes(double n)
     {
         ArrayList primes = new ArrayList();
-        int temp = 3;
-
-        if (n > 0) primes.Add(2);
-
-        while (primes.Count < n)
+        try
         {
-            int sqrtN = Convert.ToInt32(System.Math.Sqrt(n));
-            bool isPrime = true;
+            int temp = 3;
 
-            for (int i = 0; i < primes.Count && Convert.ToInt32(primes[i]) <= sqrtN; ++i)
+            if (n > 0) primes.Add(2);
+
+            while (primes.Count < n)
             {
-                int x = Convert.ToInt32(primes[i]);
-                if (temp % x == 0)
-                {
-                    isPrime = false;
-                    break;
-                }
-            }
+                int sqrtN = Convert.ToInt32(System.Math.Sqrt(n));
+                bool isPrime = true;
 
-            if (isPrime) primes.Add(temp);
-            temp += 2;
+                for (int i = 0; i < primes.Count && Convert.ToInt32(primes[i]) <= sqrtN; ++i)
+                {
+                    int x = Convert.ToInt32(primes[i]);
+                    if (temp % x == 0)
+                    {
+                        isPrime = false;
+                        break;
+                    }
+                }
+
+                if (isPrime) primes.Add(temp);
+                temp += 2;
+            }
+            return primes;
         }
-        return primes;
+        catch (Exception)
+        {
+            primes.Clear();
+            primes.Add("Invalid entry");
+            return primes;
+        }
+
     }
 
     [WebMethod]
