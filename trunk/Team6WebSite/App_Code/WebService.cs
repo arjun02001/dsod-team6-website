@@ -545,7 +545,7 @@ public class WebService : System.Web.Services.WebService
                     return "Invalid Email Id";
             }
             else
-                return string.Empty;
+                return "Input Error";
         }
         catch
         {
