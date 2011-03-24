@@ -608,41 +608,74 @@ public class WebService : System.Web.Services.WebService
     }
 
     // Yet to test it
-    //[WebMethod]
-   // public ArrayList GenerateNPrimes(double n)
-   // {
-    //    ArrayList primes = new ArrayList();
-    //    bool isPrime = true;
-     //   
-      //  if (n>0) primes.Add(2);
-    //
-      //  for (int i=1; i<= Convert.ToInt32(System.Math.Sqrt(n)); 
-       // 
-       // 
-       // 
-       // 
-       // 
-        //if(n < 2) isPrime = false;
-    //
-        //if(n>=2) 
-        //primes.Add(2);
-        //
-        //if (n > 2 && n != 2 && (n % 2) == 0) isPrime = false;
-        //
-        //for (int i = 2; i < n; i++)
-        //{
-            //primes.Add(i);
-          //  if ((n % i) == 0)
-            //    isPrime=false;
-            //else
-            //    primes.Add(i);
-        //}
-      //  if (isPrime)
-         //   return primes;
-      //  else 
-       //     return null;
-    //}
+    [WebMethod]
+    public ArrayList GenerateNPrimes(double n)
+    {
+        ArrayList primes = new ArrayList();
+        int temp = 3;
 
+        if (n > 0) primes.Add(2);
+
+        while (primes.Count < n)
+        {
+            int sqrtN = Convert.ToInt32(System.Math.Sqrt(n));
+            bool isPrime = true;
+
+            for (int i = 0; i < primes.Count && Convert.ToInt32(primes[i]) <= sqrtN; ++i)
+            {
+                int x = Convert.ToInt32(primes[i]);
+                if (temp % x == 0)
+                {
+                    isPrime = false;
+                    break;
+                }
+            }
+
+            if (isPrime) primes.Add(temp);
+            temp += 2;
+        }
+        return primes;
+    }
+
+    [WebMethod]
+    public string BMICalculator(string weightInPounds, string heightFeet, string andInches)
+    {
+        double wt = Convert.ToDouble(weightInPounds);
+        int ht1 = Convert.ToInt32(heightFeet);
+        int ht2 = Convert.ToInt32(andInches);
+        double bmi;
+        int totalHeight;
+        string Message = "";
+
+        totalHeight = ht1 * 12 + ht2;
+        //body mass index formula
+        bmi = (wt * 703) / (totalHeight * totalHeight);
+        //weight in kilograms
+        double wtKg;
+        wtKg = wt * 0.45359;
+
+        //height in centimeters
+        double htCm;
+        htCm = totalHeight * 2.54;
+
+        string weightStatus;
+
+        if (bmi >= 30)
+            weightStatus = "Obese";
+        else if (bmi <= 29.9 && bmi >= 25)
+            weightStatus = "OverWeight";
+        else if (bmi <= 24.9 && bmi >= 18.5)
+            weightStatus = "Normal";
+        else
+            weightStatus = "UnderWeight";
+
+        Message = "Your Body Mass Index is " + bmi +
+            ", Your weight in kilograms is " + wtKg +
+            "and height in centimeters is " + htCm +
+            " and Your weight status is " + weightStatus;
+
+        return Message;
+    }
 }
 
 
