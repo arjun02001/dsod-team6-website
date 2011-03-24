@@ -12,10 +12,12 @@ using System.Net.Mail;
 using System.Text.RegularExpressions;
 using ZipService;
 using System.Xml;
+using IpToCountryService;
 
 
 /// <summary>
 using System.Web.Services;
+using System.Net;
 /// Summary description for WebService
 /// </summary>
 [WebService(Namespace = "http://tempuri.org/")]
@@ -691,6 +693,33 @@ public class WebService : System.Web.Services.WebService
         catch (Exception)
         {
             return "Error in calculating BMI";
+        }
+    }
+
+    [WebMethod]
+    public string GetCountryFromIP(string ipaddress)
+    {
+        try
+        {
+            try
+            {
+                IPAddress ipa = IPAddress.Parse(ipaddress);
+            }
+            catch (Exception)
+            {
+                return "Invalid IP address";
+            }
+            WSIP2Country wsip = new WSIP2Country();
+            string countrycode = wsip.GetCountryCode(ipaddress);
+            if (!string.IsNullOrEmpty(countrycode))
+            {
+                return countrycode;
+            }
+            return "An error occured";
+        }
+        catch (Exception)
+        {
+            return "An error occured";
         }
     }
 }

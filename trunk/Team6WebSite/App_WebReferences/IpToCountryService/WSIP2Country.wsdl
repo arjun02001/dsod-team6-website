@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetCountryCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ipAddress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCountryCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCountryCodeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCountryCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCountryCode" />
+  </wsdl:message>
+  <wsdl:message name="GetCountryCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCountryCodeResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WSIP2CountrySoap">
+    <wsdl:operation name="GetCountryCode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The IP2Country Web Service is hosted on &lt;a href="http://www.9kgames.com" target="_blank"&gt;http://www.9kgames.com/WS/&lt;/a&gt;. This method call will get two-character country code based on ISO 3166. For more information please visit eSupersun's blog at &lt;a href="http://esupersun.blogspot.com" target="_blank"&gt;http://esupersun.blogspot.com&lt;/a&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetCountryCodeSoapIn" />
+      <wsdl:output message="tns:GetCountryCodeSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSIP2CountrySoap" type="tns:WSIP2CountrySoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetCountryCode">
+      <soap:operation soapAction="http://tempuri.org/GetCountryCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSIP2CountrySoap12" type="tns:WSIP2CountrySoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetCountryCode">
+      <soap12:operation soapAction="http://tempuri.org/GetCountryCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSIP2Country">
+    <wsdl:port name="WSIP2CountrySoap" binding="tns:WSIP2CountrySoap">
+      <soap:address location="http://9kgames.com/WS/WSIP2Country.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSIP2CountrySoap12" binding="tns:WSIP2CountrySoap12">
+      <soap12:address location="http://9kgames.com/WS/WSIP2Country.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
