@@ -572,7 +572,7 @@ public class WebService : System.Web.Services.WebService
                     return "Invalid US Zip Code";
             }
             else
-                return string.Empty;
+                return "Input Error";
         }
         catch
         {
