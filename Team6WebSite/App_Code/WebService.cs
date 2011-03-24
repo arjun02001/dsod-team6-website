@@ -640,41 +640,48 @@ public class WebService : System.Web.Services.WebService
     [WebMethod]
     public string BMICalculator(string weightInPounds, string heightFeet, string andInches)
     {
-        double wt = Convert.ToDouble(weightInPounds);
-        int ht1 = Convert.ToInt32(heightFeet);
-        int ht2 = Convert.ToInt32(andInches);
-        double bmi;
-        int totalHeight;
-        string Message = "";
+        try
+        {
+            double wt = Convert.ToDouble(weightInPounds);
+            int ht1 = Convert.ToInt32(heightFeet);
+            int ht2 = Convert.ToInt32(andInches);
+            double bmi;
+            int totalHeight;
+            string Message = "";
 
-        totalHeight = ht1 * 12 + ht2;
-        //body mass index formula
-        bmi = (wt * 703) / (totalHeight * totalHeight);
-        //weight in kilograms
-        double wtKg;
-        wtKg = wt * 0.45359;
+            totalHeight = ht1 * 12 + ht2;
+            //body mass index formula
+            bmi = (wt * 703) / (totalHeight * totalHeight);
+            //weight in kilograms
+            double wtKg;
+            wtKg = wt * 0.45359;
 
-        //height in centimeters
-        double htCm;
-        htCm = totalHeight * 2.54;
+            //height in centimeters
+            double htCm;
+            htCm = totalHeight * 2.54;
 
-        string weightStatus;
+            string weightStatus;
 
-        if (bmi >= 30)
-            weightStatus = "Obese";
-        else if (bmi <= 29.9 && bmi >= 25)
-            weightStatus = "OverWeight";
-        else if (bmi <= 24.9 && bmi >= 18.5)
-            weightStatus = "Normal";
-        else
-            weightStatus = "UnderWeight";
+            if (bmi >= 30)
+                weightStatus = "obese";
+            else if (bmi <= 29.9 && bmi >= 25)
+                weightStatus = "overweight";
+            else if (bmi <= 24.9 && bmi >= 18.5)
+                weightStatus = "normal";
+            else
+                weightStatus = "underWeight";
 
-        Message = "Your Body Mass Index is " + bmi +
-            ", Your weight in kilograms is " + wtKg +
-            "and height in centimeters is " + htCm +
-            " and Your weight status is " + weightStatus;
+            Message = "Your Body Mass Index is " + bmi +
+                ", Your weight in kilograms is " + wtKg +
+                " and height in centimeters is " + htCm +
+                " and Your weight status is " + weightStatus;
 
-        return Message;
+            return Message;
+        }
+        catch (Exception)
+        {
+            return "Error in calculating BMI";
+        }
     }
 }
 
