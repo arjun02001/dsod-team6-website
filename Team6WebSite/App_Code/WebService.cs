@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using ZipService;
 using System.Xml;
 using IpToCountryService;
+using net.webservicex.www;
 
 
 /// <summary>
@@ -708,6 +709,20 @@ public class WebService : System.Web.Services.WebService
         catch (Exception)
         {
             return "An error occured";
+        }
+    }
+    [WebMethod]
+    public string GetUDDIRegistryInfo(UDDIRegistry UDDIRegister, string businessName, string businessStartsWith)
+    {
+        try
+        {
+            UDDIBusinessFinder uddiBusinessFinder = new UDDIBusinessFinder();
+            String businessFinderResult = uddiBusinessFinder.FindBusiness(UDDIRegister, businessName, businessStartsWith);
+            return businessFinderResult;
+        }
+        catch (Exception)
+        {
+            return "An error Occured";
         }
     }
 }
