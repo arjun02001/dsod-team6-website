@@ -780,7 +780,90 @@ public class WebService : System.Web.Services.WebService
         elements[up] = a;
         p = up;
     }
+
+    [WebMethod(Description = "Takes comma separated values and sorts them")]
+    public String Sort(String numberSequence)
+    {
+        int[] numArray = new int[20];
+        String[] numbers = numberSequence.Split(',');
+        for (int x = 0; x <numbers.Length; x++)
+        {
+            try
+            {
+                numArray[x] = Convert.ToInt32(numbers[x]);
+            }
+            catch (Exception)
+            {
+                return "Incorrect Input";
+            }
+        }
+            int i;
+            int j;
+            int index;
+
+            for (i = 1; i < numbers.Length; i++)
+            {
+                index = numArray[i];
+                j = i;
+
+                while ((j > 0) && (numArray[j - 1] > index))
+                {
+                    numArray[j] = numArray[j - 1];
+                    j = j - 1;
+                }
+
+                numArray[j] = index;
+            }
+            String Result = string.Empty;
+            for (int newi = 0; newi < numbers.Length; newi++)
+            {
+                Result += numArray[newi].ToString();
+                   if(!(newi == numbers.Length-1))
+                       Result += ",";
+
+            }
+        
+        return Result;
+    }
+    [WebMethod(Description="Takes comma separated numbers and finds the order of the elements in them" )]
+    public String OrderOfElement(String numberSequence,int element)
+    {
+        String sortedSequence = Sort(numberSequence);
+        int[] numArray = new int[20];
+        String[] numbers = sortedSequence.Split(',');
+        for (int x = 0; x < numbers.Length; x++)
+        {
+            try
+            {
+                numArray[x] = Convert.ToInt32(numbers[x]);
+            }
+            catch (Exception)
+            {
+                return "Incorrect Input";
+            }
+        }
+        return (Binary_Search(numArray, 0, numbers.Length-1, element).ToString());
+    }
+    
+    int Binary_Search(int[] sortedArray, int low, int high, int element)
+    {
+        if(high<low)
+            return -1;
+
+        int middle = low + (high - low)/2;
+
+        if (element < sortedArray[middle])
+            return Binary_Search(sortedArray, low, middle - 1, element);
+
+        else if (element > sortedArray[middle])
+            return Binary_Search(sortedArray, middle + 1, high, element);
+
+        else
+            return middle;
+    }
 }
+
+
 
 
 public class CoordinateInfo
