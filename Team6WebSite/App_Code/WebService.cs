@@ -610,7 +610,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    // Yet to test it
+    
     [WebMethod]
     public ArrayList GenerateNPrimes(double n)
     {
@@ -724,6 +724,60 @@ public class WebService : System.Web.Services.WebService
         {
             return "An error Occured";
         }
+    }
+
+    public int p;
+
+    // yet to test it
+    [WebMethod]
+    public int[] QuickSortMethod (int n, string allElements)
+    {
+        string[] strings = allElements.Split(',');
+        int[] elements = new int[allElements.Length];
+
+        for (int i=0; i<allElements.Length; i++)
+        {
+            elements[i] = int.Parse(strings[i]);
+        }
+
+        quicksort(elements, 0, n-1);
+
+        return elements;
+    }
+
+    void quicksort(int[] elements, int lb, int ub)
+    {
+        if(lb>=ub)
+            return;
+        partition(elements, lb, ub);
+        quicksort(elements, lb, p - 1);
+        quicksort(elements, p+1, ub);
+    }
+
+    void partition(int[] elements, int lb, int ub)
+    {
+        int a, down, temp, up, i;
+
+        a = elements[lb];
+        up = ub;
+        down = lb;
+
+        while (down < up)
+        {
+            while ((elements[down] <= a) && (down < ub))
+                down++;
+            while (elements[up] > a)
+                up--;
+            if (down < up)
+            {
+                temp = elements[down];
+                elements[down] = elements[up];
+                elements[up] = temp;
+            }
+        }
+        elements[lb] = elements[up];
+        elements[up] = a;
+        p = up;
     }
 }
 
