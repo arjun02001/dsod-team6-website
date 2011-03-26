@@ -730,12 +730,12 @@ public class WebService : System.Web.Services.WebService
 
     // yet to test it
     [WebMethod]
-    public int[] QuickSortMethod (int n, string allElements)
+    public int[] QuickSortMethod (int n, string commaSeparatedElements)
     {
-        string[] strings = allElements.Split(',');
-        int[] elements = new int[allElements.Length];
+        string[] strings = commaSeparatedElements.Split(',');
+        int[] elements = new int[commaSeparatedElements.Length];
 
-        for (int i=0; i<allElements.Length; i++)
+        for (int i=0; i<commaSeparatedElements.Length; i++)
         {
             elements[i] = int.Parse(strings[i]);
         }
