@@ -35,7 +35,7 @@ public class WebService : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
-    [WebMethod]
+    [WebMethod(Description = "Gets the latitude and longitude from a valid address")]
     public string GetCoordFromAddress(string address)
     {
         try
@@ -83,7 +83,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod (Description = "Takes comma separated latitude and longitude and returns valid address")]
     public string GetAddressFromCoord(string commaseparatedcoords)
     {
         try
@@ -123,7 +123,7 @@ public class WebService : System.Web.Services.WebService
 
      }
 
-    [WebMethod]
+    [WebMethod (Description = "Encrypts the message using the passphrase")]
     public string EncryptString(string message, string passphrase)
     {
         try
@@ -155,7 +155,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod (Description = "Decrypts the message using the passphrase")]
     public string DecryptString(string encryptedmessage, string passphrase)
     {
         try
@@ -188,7 +188,7 @@ public class WebService : System.Web.Services.WebService
         
     }
 
-    [WebMethod]
+    [WebMethod (Description = "Takes a string and returns its ascii value")]
     public String AsciiConversion(String stringtoconvert)
     {
         try
@@ -209,7 +209,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod (Description = "Takes a valid address and returns a google image url")]
     public string GetImageFromAddress(string address)
     {
         try
@@ -251,7 +251,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod (Description = "Takes a sentence and returns the word count")]
     public int WordCount(string sentence)
     {
         try
@@ -276,7 +276,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod (Description = "Sends an email to the input email id from a default email id")]
     public string SendEmail(string email)
     {
         try
@@ -370,7 +370,7 @@ public class WebService : System.Web.Services.WebService
     //}
 
 
-    [WebMethod]
+    [WebMethod (Description = "Takes a length and returns a random password of the given length")]
     public string GenerateRandomPassword(int size)
     {
         try
@@ -414,13 +414,13 @@ public class WebService : System.Web.Services.WebService
     }
 
 
-    [WebMethod]
+    [WebMethod (Description = "Returns the current system time")]
     public string GetCurrentTime()
     {
         return String.Format("The current time is {0}.", DateTime.Now.ToString());
     }
 
-    [WebMethod]
+    [WebMethod (Description = "Returns the factorial and whether the no. is prime or not")]
     public String FactorialAndPrimeNumber(int number)
     {
         int s, k = 1, m, n = 1;
@@ -444,7 +444,7 @@ public class WebService : System.Web.Services.WebService
         return result + " , The facorial of the given number is " + n;
     }
 
-    [WebMethod]
+    [WebMethod (Description = "Validates a credit card and returns the type of credit card")]
     public string ValidateCreditCardNumber(string cardnumber)
     {
         if (cardnumber.Length < 13)
@@ -490,7 +490,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod (Description = "Returns the city and state corresponding to a given zip")]
     public string GetInfoByZip(string zip)
     {
         try
@@ -507,7 +507,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod (Description = "Reverses a string")]
     public string ReverseString(string message)
     {
         try
@@ -527,7 +527,7 @@ public class WebService : System.Web.Services.WebService
     /// </summary>
     /// <param name="emailid"></param>
     /// <returns>True/False</returns>
-    [WebMethod]
+    [WebMethod (Description = "Validates email address")]
     public string ValidateEmail(string emailid)
     {
         string email_regex = 
@@ -561,7 +561,7 @@ public class WebService : System.Web.Services.WebService
     /// </summary>
     /// <param name="zip"></param>
     /// <returns></returns>
-    [WebMethod]
+    [WebMethod (Description = "Validates zip code")]
     public string ValidateZip(string zip)
     {
         string zip_regex = "(^[0-9]{5}$)|(^[0-9]{5}-[0-9]{4}$)";
@@ -588,7 +588,7 @@ public class WebService : System.Web.Services.WebService
     /// </summary>
     /// <param name="phone"></param>
     /// <returns></returns>
-    [WebMethod]
+    [WebMethod (Description = "Validates US phone")]
     public string ValidatePhone(string phone)
     {
         string phone_regex = @"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$";
@@ -611,7 +611,7 @@ public class WebService : System.Web.Services.WebService
     }
 
     
-    [WebMethod]
+    [WebMethod (Description = "Returns the first n prime nos.")]
     public ArrayList GenerateNPrimes(double n)
     {
         ArrayList primes = new ArrayList();
@@ -650,7 +650,7 @@ public class WebService : System.Web.Services.WebService
 
     }
 
-    [WebMethod]
+    [WebMethod (Description = "Calculates the body mass index")]
     public string BMICalculator(string weightInPounds, string htinFeet, string htinInches)
     {
         try
@@ -685,7 +685,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod (Description = "Returns the country to which the ip address belongs")]
     public string GetCountryFromIP(string ipaddress)
     {
         try
@@ -711,7 +711,8 @@ public class WebService : System.Web.Services.WebService
             return "An error occured";
         }
     }
-    [WebMethod]
+
+    [WebMethod (Description = "Gets the UDDI registry information")]
     public string GetUDDIRegistryInfo(UDDIRegistry UDDIRegister, string businessName, string businessStartsWith)
     {
         try
@@ -729,7 +730,7 @@ public class WebService : System.Web.Services.WebService
     public int p;
 
     // yet to test it
-    [WebMethod]
+    [WebMethod (Description = "Takes comma separated values and sorts them")]
     public int[] QuickSortMethod (int n, string commaSeparatedElements)
     {
         string[] strings = commaSeparatedElements.Split(',');
