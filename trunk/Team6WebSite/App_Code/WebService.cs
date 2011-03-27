@@ -16,6 +16,7 @@ using IpToCountryService;
 using net.webservicex.www;
 using holidaywebservice;
 
+
 /// <summary>
 using System.Web.Services;
 using System.Net;
@@ -732,20 +733,41 @@ public class WebService : System.Web.Services.WebService
     public int p;
 
     // yet to test it
-    [WebMethod(Description = "Takes comma separated values and sorts them")]
-    public int[] QuickSortMethod(int n, string commaSeparatedElements)
+    [WebMethod(Description = "Takes comma separated values and sorts them using the Quick Sort algorithm")]
+    public String QuickSortMethod(int n, string commaSeparatedElements)
     {
         string[] strings = commaSeparatedElements.Split(',');
-        int[] elements = new int[commaSeparatedElements.Length];
-
-        for (int i = 0; i < commaSeparatedElements.Length; i++)
+        int[] elements = new int[strings.Length];
+        try
         {
-            elements[i] = int.Parse(strings[i]);
+            if (n == strings.Length)
+            {
+                for (int i = 0; i < strings.Length; i++)
+                {
+                    elements[i] = int.Parse(strings[i]);
+                }
+            }
+            else
+            {
+                return "Invalid Input: Total number of integers specified does not match the number of values entered.";
+            }
         }
+        catch
+        {
+            return "An error has occured";
+        }
+            quicksort(elements, 0, n - 1);
+            //return elements;
+            String Result = "Sorted Elements (Quick Sort):" + Environment.NewLine + Environment.NewLine;
+            for (int x = 0; x < strings.Length; x++)
+            {
+                Result += elements[x].ToString();
+                if (!(x == elements.Length - 1))
+                    Result += ", ";
 
-        quicksort(elements, 0, n - 1);
+            }
 
-        return elements;
+            return Result;
     }
 
     void quicksort(int[] elements, int lb, int ub)
@@ -759,7 +781,7 @@ public class WebService : System.Web.Services.WebService
 
     void partition(int[] elements, int lb, int ub)
     {
-        int a, down, temp, up, i;
+        int a, down, temp, up;
 
         a = elements[lb];
         up = ub;
@@ -782,6 +804,7 @@ public class WebService : System.Web.Services.WebService
         elements[up] = a;
         p = up;
     }
+
 
     [WebMethod(Description = "Takes comma separated values and sorts them")]
     public String Sort(String numberSequence)
