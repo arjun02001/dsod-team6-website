@@ -850,8 +850,8 @@ public class WebService : System.Web.Services.WebService
 
         return Result;
     }
-    [WebMethod(Description = "Takes comma separated numbers and finds the order of the elements in them")]
-    public String OrderOfElement(String numberSequence, int element)
+    [WebMethod(Description = "Takes a sequence of comma separated numbers and finds the index of the element after sorting the initial sequence")]
+    public String IndexOfElement(String numberSequence, int element)
     {
         String sortedSequence = Sort(numberSequence);
         int[] numArray = new int[20];
@@ -899,6 +899,50 @@ public class WebService : System.Web.Services.WebService
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 holidays.Add(dr[0].ToString() + ", " + ((DateTime)dr[2]).ToShortDateString());
+            }
+        }
+        catch (Exception)
+        {
+            holidays.Clear();
+            holidays.Add("An error occured");
+        }
+        return holidays;
+    }
+
+    [WebMethod(Description = "Takes year as integer and returns the list of holidays in that year")]
+    public List<string> GetUSHolidaysForYear(int Year)
+    {
+        DataSet ds;
+        List<string> holidays = new List<string>();
+        try
+        {
+            USHolidayService holidayService = new USHolidayService();
+            ds = holidayService.GetHolidaysForYear(Year);
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                holidays.Add(dr[0].ToString() + "," + ((DateTime)dr[2]).ToShortDateString());
+            }
+        }
+        catch (Exception)
+        {
+            holidays.Clear();
+            holidays.Add("An error occured");
+        }
+        return holidays;
+    }
+
+    [WebMethod(Description = "Takes year as integer and returns the list of holidays in that year")]
+    public List<string> GetUSHolidaysInDateRange(DateTime StartDate, DateTime EndDate)
+    {
+        DataSet ds;
+        List<string> holidays = new List<string>();
+        try
+        {
+            USHolidayService holidayService = new USHolidayService();
+            ds = holidayService.GetHolidaysForDateRange(StartDate, EndDate);
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                holidays.Add(dr[0].ToString() + "," + ((DateTime)dr[2]).ToShortDateString());
             }
         }
         catch (Exception)
