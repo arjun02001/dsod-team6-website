@@ -14,11 +14,13 @@ using ZipService;
 using System.Xml;
 using IpToCountryService;
 using net.webservicex.www;
-
+using holidaywebservice;
 
 /// <summary>
 using System.Web.Services;
 using System.Net;
+using System.Data;
+using System.IO;
 /// Summary description for WebService
 /// </summary>
 [WebService(Namespace = "http://tempuri.org/")]
@@ -83,7 +85,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod (Description = "Takes comma separated latitude and longitude and returns valid address")]
+    [WebMethod(Description = "Takes comma separated latitude and longitude and returns valid address")]
     public string GetAddressFromCoord(string commaseparatedcoords)
     {
         try
@@ -121,9 +123,9 @@ public class WebService : System.Web.Services.WebService
             return "Address not found";
         }
 
-     }
+    }
 
-    [WebMethod (Description = "Encrypts the message using the passphrase")]
+    [WebMethod(Description = "Encrypts the message using the passphrase")]
     public string EncryptString(string message, string passphrase)
     {
         try
@@ -155,7 +157,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod (Description = "Decrypts the message using the passphrase")]
+    [WebMethod(Description = "Decrypts the message using the passphrase")]
     public string DecryptString(string encryptedmessage, string passphrase)
     {
         try
@@ -185,10 +187,10 @@ public class WebService : System.Web.Services.WebService
         {
             return "Error in decrypting string";
         }
-        
+
     }
 
-    [WebMethod (Description = "Takes a string and returns its ascii value")]
+    [WebMethod(Description = "Takes a string and returns its ascii value")]
     public String AsciiConversion(String stringtoconvert)
     {
         try
@@ -209,7 +211,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod (Description = "Takes a valid address and returns a google image url")]
+    [WebMethod(Description = "Takes a valid address and returns a google image url")]
     public string GetImageFromAddress(string address)
     {
         try
@@ -251,7 +253,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod (Description = "Takes a sentence and returns the word count")]
+    [WebMethod(Description = "Takes a sentence and returns the word count")]
     public int WordCount(string sentence)
     {
         try
@@ -276,7 +278,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod (Description = "Sends an email to the input email id from a default email id")]
+    [WebMethod(Description = "Sends an email to the input email id from a default email id")]
     public string SendEmail(string email)
     {
         try
@@ -370,7 +372,7 @@ public class WebService : System.Web.Services.WebService
     //}
 
 
-    [WebMethod (Description = "Takes a length and returns a random password of the given length")]
+    [WebMethod(Description = "Takes a length and returns a random password of the given length")]
     public string GenerateRandomPassword(int size)
     {
         try
@@ -378,25 +380,25 @@ public class WebService : System.Web.Services.WebService
 
             string[] Characters = new string[62];
             char toInsert = 'a';
-            int i=0,j=0,num=0;
-            for ( i = 0; i < 26; i++)
+            int i = 0, j = 0, num = 0;
+            for (i = 0; i < 26; i++)
             {
                 Characters[i] = toInsert.ToString();
                 toInsert++;
             }
             toInsert = 'A';
-            for (j = i; j < i+26; j++)
+            for (j = i; j < i + 26; j++)
             {
                 Characters[j] = toInsert.ToString();
                 toInsert++;
             }
-            i=j;
+            i = j;
             for (j = i; j < i + 10; j++)
             {
                 Characters[j] = num.ToString();
                 num++;
             }
-            
+
             Random RandChar = new Random();
             string Password = "";
 
@@ -414,13 +416,13 @@ public class WebService : System.Web.Services.WebService
     }
 
 
-    [WebMethod (Description = "Returns the current system time")]
+    [WebMethod(Description = "Returns the current system time")]
     public string GetCurrentTime()
     {
         return String.Format("The current time is {0}.", DateTime.Now.ToString());
     }
 
-    [WebMethod (Description = "Returns the factorial and whether the no. is prime or not")]
+    [WebMethod(Description = "Returns the factorial and whether the no. is prime or not")]
     public String FactorialAndPrimeNumber(int number)
     {
         int s, k = 1, m, n = 1;
@@ -444,7 +446,7 @@ public class WebService : System.Web.Services.WebService
         return result + " , The facorial of the given number is " + n;
     }
 
-    [WebMethod (Description = "Validates a credit card and returns the type of credit card")]
+    [WebMethod(Description = "Validates a credit card and returns the type of credit card")]
     public string ValidateCreditCardNumber(string cardnumber)
     {
         if (cardnumber.Length < 13)
@@ -467,30 +469,30 @@ public class WebService : System.Web.Services.WebService
                 }
                 sum += (digits[i] > 9) ? digits[i] - 9 : digits[i];
             }
-            if (Regex.IsMatch(cardnumber, "(^4[0-9]{12}(?:[0-9]{3})?$)")) 
-            { 
-                return "Visa Card"; 
+            if (Regex.IsMatch(cardnumber, "(^4[0-9]{12}(?:[0-9]{3})?$)"))
+            {
+                return "Visa Card";
             }
-            else if (Regex.IsMatch(cardnumber, "(^5[1-5][0-9]{14}$)")) 
-            { 
-                return "Master card"; 
+            else if (Regex.IsMatch(cardnumber, "(^5[1-5][0-9]{14}$)"))
+            {
+                return "Master card";
             }
-            else if (Regex.IsMatch(cardnumber, "(^3[47][0-9]{13}$)")) 
-            { 
-                return "American Express"; 
+            else if (Regex.IsMatch(cardnumber, "(^3[47][0-9]{13}$)"))
+            {
+                return "American Express";
             }
-            else if (Regex.IsMatch(cardnumber, "(^3(?:0[0-5]|[68][0-9])[0-9]{11}$)")) 
-            { 
-                return "Diners Club"; 
+            else if (Regex.IsMatch(cardnumber, "(^3(?:0[0-5]|[68][0-9])[0-9]{11}$)"))
+            {
+                return "Diners Club";
             }
-            else 
-            { 
-                return "Unknown Card Number"; 
+            else
+            {
+                return "Unknown Card Number";
             }
         }
     }
 
-    [WebMethod (Description = "Returns the city and state corresponding to a given zip")]
+    [WebMethod(Description = "Returns the city and state corresponding to a given zip")]
     public string GetInfoByZip(string zip)
     {
         try
@@ -507,7 +509,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod (Description = "Reverses a string")]
+    [WebMethod(Description = "Reverses a string")]
     public string ReverseString(string message)
     {
         try
@@ -527,11 +529,11 @@ public class WebService : System.Web.Services.WebService
     /// </summary>
     /// <param name="emailid"></param>
     /// <returns>True/False</returns>
-    [WebMethod (Description = "Validates email address")]
+    [WebMethod(Description = "Validates email address")]
     public string ValidateEmail(string emailid)
     {
-        string email_regex = 
-			@"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@"
+        string email_regex =
+            @"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@"
      + @"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?
 				[0-9]{1,2}|25[0-5]|2[0-4][0-9])\."
      + @"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?
@@ -561,7 +563,7 @@ public class WebService : System.Web.Services.WebService
     /// </summary>
     /// <param name="zip"></param>
     /// <returns></returns>
-    [WebMethod (Description = "Validates zip code")]
+    [WebMethod(Description = "Validates zip code")]
     public string ValidateZip(string zip)
     {
         string zip_regex = "(^[0-9]{5}$)|(^[0-9]{5}-[0-9]{4}$)";
@@ -588,7 +590,7 @@ public class WebService : System.Web.Services.WebService
     /// </summary>
     /// <param name="phone"></param>
     /// <returns></returns>
-    [WebMethod (Description = "Validates US phone")]
+    [WebMethod(Description = "Validates US phone")]
     public string ValidatePhone(string phone)
     {
         string phone_regex = @"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$";
@@ -610,8 +612,8 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    
-    [WebMethod (Description = "Returns the first n prime nos.")]
+
+    [WebMethod(Description = "Returns the first n prime nos.")]
     public ArrayList GenerateNPrimes(double n)
     {
         ArrayList primes = new ArrayList();
@@ -650,7 +652,7 @@ public class WebService : System.Web.Services.WebService
 
     }
 
-    [WebMethod (Description = "Calculates the body mass index")]
+    [WebMethod(Description = "Calculates the body mass index")]
     public string BMICalculator(string weightInPounds, string htinFeet, string htinInches)
     {
         try
@@ -685,7 +687,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod (Description = "Returns the country to which the ip address belongs")]
+    [WebMethod(Description = "Returns the country to which the ip address belongs")]
     public string GetCountryFromIP(string ipaddress)
     {
         try
@@ -712,7 +714,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod (Description = "Gets the UDDI registry information")]
+    [WebMethod(Description = "Gets the UDDI registry information")]
     public string GetUDDIRegistryInfo(UDDIRegistry UDDIRegister, string businessName, string businessStartsWith)
     {
         try
@@ -730,29 +732,29 @@ public class WebService : System.Web.Services.WebService
     public int p;
 
     // yet to test it
-    [WebMethod (Description = "Takes comma separated values and sorts them")]
-    public int[] QuickSortMethod (int n, string commaSeparatedElements)
+    [WebMethod(Description = "Takes comma separated values and sorts them")]
+    public int[] QuickSortMethod(int n, string commaSeparatedElements)
     {
         string[] strings = commaSeparatedElements.Split(',');
         int[] elements = new int[commaSeparatedElements.Length];
 
-        for (int i=0; i<commaSeparatedElements.Length; i++)
+        for (int i = 0; i < commaSeparatedElements.Length; i++)
         {
             elements[i] = int.Parse(strings[i]);
         }
 
-        quicksort(elements, 0, n-1);
+        quicksort(elements, 0, n - 1);
 
         return elements;
     }
 
     void quicksort(int[] elements, int lb, int ub)
     {
-        if(lb>=ub)
+        if (lb >= ub)
             return;
         partition(elements, lb, ub);
         quicksort(elements, lb, p - 1);
-        quicksort(elements, p+1, ub);
+        quicksort(elements, p + 1, ub);
     }
 
     void partition(int[] elements, int lb, int ub)
@@ -786,7 +788,7 @@ public class WebService : System.Web.Services.WebService
     {
         int[] numArray = new int[20];
         String[] numbers = numberSequence.Split(',');
-        for (int x = 0; x <numbers.Length; x++)
+        for (int x = 0; x < numbers.Length; x++)
         {
             try
             {
@@ -797,36 +799,36 @@ public class WebService : System.Web.Services.WebService
                 return "Incorrect Input";
             }
         }
-            int i;
-            int j;
-            int index;
+        int i;
+        int j;
+        int index;
 
-            for (i = 1; i < numbers.Length; i++)
+        for (i = 1; i < numbers.Length; i++)
+        {
+            index = numArray[i];
+            j = i;
+
+            while ((j > 0) && (numArray[j - 1] > index))
             {
-                index = numArray[i];
-                j = i;
-
-                while ((j > 0) && (numArray[j - 1] > index))
-                {
-                    numArray[j] = numArray[j - 1];
-                    j = j - 1;
-                }
-
-                numArray[j] = index;
+                numArray[j] = numArray[j - 1];
+                j = j - 1;
             }
-            String Result = string.Empty;
-            for (int newi = 0; newi < numbers.Length; newi++)
-            {
-                Result += numArray[newi].ToString();
-                   if(!(newi == numbers.Length-1))
-                       Result += ",";
 
-            }
-        
+            numArray[j] = index;
+        }
+        String Result = string.Empty;
+        for (int newi = 0; newi < numbers.Length; newi++)
+        {
+            Result += numArray[newi].ToString();
+            if (!(newi == numbers.Length - 1))
+                Result += ",";
+
+        }
+
         return Result;
     }
-    [WebMethod(Description="Takes comma separated numbers and finds the order of the elements in them" )]
-    public String OrderOfElement(String numberSequence,int element)
+    [WebMethod(Description = "Takes comma separated numbers and finds the order of the elements in them")]
+    public String OrderOfElement(String numberSequence, int element)
     {
         String sortedSequence = Sort(numberSequence);
         int[] numArray = new int[20];
@@ -842,15 +844,15 @@ public class WebService : System.Web.Services.WebService
                 return "Incorrect Input";
             }
         }
-        return (Binary_Search(numArray, 0, numbers.Length-1, element).ToString());
+        return (Binary_Search(numArray, 0, numbers.Length - 1, element).ToString());
     }
-    
+
     int Binary_Search(int[] sortedArray, int low, int high, int element)
     {
-        if(high<low)
+        if (high < low)
             return -1;
 
-        int middle = low + (high - low)/2;
+        int middle = low + (high - low) / 2;
 
         if (element < sortedArray[middle])
             return Binary_Search(sortedArray, low, middle - 1, element);
@@ -861,10 +863,29 @@ public class WebService : System.Web.Services.WebService
         else
             return middle;
     }
+
+    [WebMethod(Description = "Takes year and month in integer form and returns the list of holidays")]
+    public List<string> GetUSHoliday(int year, int month)
+    {
+        DataSet ds;
+        List<string> holidays = new List<string>();
+        try
+        {
+            USHolidayService service = new USHolidayService();
+            ds = service.GetHolidaysForMonth(year, month);
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                holidays.Add(dr[0].ToString() + ", " + ((DateTime)dr[2]).ToShortDateString());
+            }
+        }
+        catch (Exception)
+        {
+            holidays.Clear();
+            holidays.Add("An error occured");
+        }
+        return holidays;
+    }
 }
-
-
-
 
 public class CoordinateInfo
 {
