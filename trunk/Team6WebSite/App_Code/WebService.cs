@@ -15,6 +15,7 @@ using System.Xml;
 using IpToCountryService;
 using net.webservicex.www;
 using holidaywebservice;
+using RouteService;
 
 
 /// <summary>
@@ -302,75 +303,75 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    //[WebMethod]
-    //public string GenerateMajorRoutes(string address)
-    //{
-    //    try
-    //    {
-    //        string locationString = GetCoordFromAddress(address);
-    //        string results = "";
-    //        string key = "AjdBmWL-51nlsoocyGsHAnE3eNOADU1CPWmJ-9kmPL1s7X13jurTlrRx1A49WzwD";
-    //        MajorRoutesRequest majorRoutesRequest = new MajorRoutesRequest();
+    [WebMethod (Description = "Computes the route to the given address from North, South, East and West")]
+    public string GenerateMajorRoutes(string address)
+    {
+        try
+        {
+            string locationString = GetCoordFromAddress(address);
+            string results = "";
+            string key = "AjdBmWL-51nlsoocyGsHAnE3eNOADU1CPWmJ-9kmPL1s7X13jurTlrRx1A49WzwD";
+            MajorRoutesRequest majorRoutesRequest = new MajorRoutesRequest();
 
-    //        // Set the credentials using a valid Bing Maps key
-    //        majorRoutesRequest.Credentials = new RoutingService.Credentials();
-    //        majorRoutesRequest.Credentials.ApplicationId = key;
+            // Set the credentials using a valid Bing Maps key
+            majorRoutesRequest.Credentials = new RouteService.Credentials();
+            majorRoutesRequest.Credentials.ApplicationId = key;
 
-    //        // Set the destination of the routes from major roads
-    //        Waypoint endPoint = new Waypoint();
-    //        endPoint.Location = new RoutingService.Location();
-    //        string[] digits = locationString.Split(',');
-    //        endPoint.Location.Latitude = double.Parse(digits[0].Trim());
-    //        endPoint.Location.Longitude = double.Parse(digits[1].Trim());
-    //        endPoint.Description = "Location";
+            // Set the destination of the routes from major roads
+            Waypoint endPoint = new Waypoint();
+            endPoint.Location = new RouteService.Location();
+            string[] digits = locationString.Split(',');
+            endPoint.Location.Latitude = double.Parse(digits[0].Trim());
+            endPoint.Location.Longitude = double.Parse(digits[1].Trim());
+            endPoint.Description = "Location";
 
-    //        // Set the option to return full routes with directions
-    //        MajorRoutesOptions options = new MajorRoutesOptions();
-    //        options.ReturnRoutes = true;
+            // Set the option to return full routes with directions
+            MajorRoutesOptions options = new MajorRoutesOptions();
+            options.ReturnRoutes = true;
 
-    //        majorRoutesRequest.Destination = endPoint;
-    //        majorRoutesRequest.Options = options;
+            majorRoutesRequest.Destination = endPoint;
+            majorRoutesRequest.Options = options;
 
-    //        // Make the route-from-major-roads request
-    //        RouteServiceClient routeService = new RouteServiceClient("BasicHttpBinding_IRouteService");
+            // Make the route-from-major-roads request
+            RouteServiceClient routeService = new RouteServiceClient("BasicHttpBinding_IRouteService");
 
-    //        // The result is an MajorRoutesResponse Object
-    //        MajorRoutesResponse majorRoutesResponse = routeService.CalculateRoutesFromMajorRoads(majorRoutesRequest);
+            // The result is an MajorRoutesResponse Object
+            MajorRoutesResponse majorRoutesResponse = routeService.CalculateRoutesFromMajorRoads(majorRoutesRequest);
 
-    //        Regex regex = new Regex("<[/a-zA-Z:]*>",
-    //          RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            Regex regex = new Regex("<[/a-zA-Z:]*>",
+              RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
-    //        if (majorRoutesResponse.StartingPoints.Length > 0)
-    //        {
-    //            StringBuilder directions = new StringBuilder();
+            if (majorRoutesResponse.StartingPoints.Length > 0)
+            {
+                StringBuilder directions = new StringBuilder();
 
-    //            for (int i = 0; i < majorRoutesResponse.StartingPoints.Length; i++)
-    //            {
-    //                directions.Append(String.Format("Coming from {1}\n", i + 1,
-    //                    majorRoutesResponse.StartingPoints[i].Description));
+                for (int i = 0; i < majorRoutesResponse.StartingPoints.Length; i++)
+                {
+                    directions.Append(String.Format("Coming from {1}\n", i + 1,
+                        majorRoutesResponse.StartingPoints[i].Description));
 
-    //                for (int j = 0;
-    //                  j < majorRoutesResponse.Routes[i].Legs[0].Itinerary.Length; j++)
-    //                {
-    //                    //Strip tags
-    //                    string step = regex.Replace(
-    //                      majorRoutesResponse.Routes[i].Legs[0].Itinerary[j].Text, string.Empty);
-    //                    directions.Append(String.Format("     {0}. {1}\n", j + 1, step));
-    //                }
-    //            }
+                    for (int j = 0;
+                      j < majorRoutesResponse.Routes[i].Legs[0].Itinerary.Length; j++)
+                    {
+                        //Strip tags
+                        string step = regex.Replace(
+                          majorRoutesResponse.Routes[i].Legs[0].Itinerary[j].Text, string.Empty);
+                        directions.Append(String.Format("     {0}. {1}\n", j + 1, step));
+                    }
+                }
 
-    //            results = directions.ToString();
-    //        }
-    //        else
-    //            results = "No Routes found";
+                results = directions.ToString();
+            }
+            else
+                results = "No Routes found";
 
-    //        return results;
-    //    }
-    //    catch (Exception)
-    //    {
-    //        return "No Routes Found";
-    //    }
-    //}
+            return results;
+        }
+        catch (Exception)
+        {
+            return "No Routes Found";
+        }
+    }
 
 
     [WebMethod(Description = "Takes a length and returns a random password of the given length")]
@@ -715,20 +716,20 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
-    [WebMethod(Description = "Gets the UDDI registry information")]
-    public string GetUDDIRegistryInfo(UDDIRegistry UDDIRegister, string businessName, string businessStartsWith)
-    {
-        try
-        {
-            UDDIBusinessFinder uddiBusinessFinder = new UDDIBusinessFinder();
-            String businessFinderResult = uddiBusinessFinder.FindBusiness(UDDIRegister, businessName, businessStartsWith);
-            return businessFinderResult;
-        }
-        catch (Exception)
-        {
-            return "An error Occured";
-        }
-    }
+    //[WebMethod(Description = "Gets the UDDI registry information")]
+    //public string GetUDDIRegistryInfo(UDDIRegistry UDDIRegister, string businessName, string businessStartsWith)
+    //{
+    //    try
+    //    {
+    //        UDDIBusinessFinder uddiBusinessFinder = new UDDIBusinessFinder();
+    //        String businessFinderResult = uddiBusinessFinder.FindBusiness(UDDIRegister, businessName, businessStartsWith);
+    //        return businessFinderResult;
+    //    }
+    //    catch (Exception)
+    //    {
+    //        return "An error Occured";
+    //    }
+    //}
 
     public int p;
 
